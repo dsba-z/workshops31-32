@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(Modelviewtest LANGUAGES CXX)
+project(ModelView LANGUAGES CXX)
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)

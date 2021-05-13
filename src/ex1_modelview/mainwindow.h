@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 
+#include "examplemodel.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -20,7 +22,7 @@ private slots:
     
 private:
     Ui::MainWindow *ui;
-    QStandardItemModel *titanicModel;
+    ExampleModel *titanicModel;
 };
 
 #endif // MAINWINDOW_H

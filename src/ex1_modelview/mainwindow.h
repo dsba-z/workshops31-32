@@ -16,6 +16,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void setListViewColumn(int);
+    
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *titanicModel;

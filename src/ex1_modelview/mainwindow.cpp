@@ -14,8 +14,36 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    
     titanicModel = new QStandardItemModel(this);
     
+    ui->listView->setModel(titanicModel);
+    ui->tableView->setModel(titanicModel);
+    
+    
+    QFile inputFile("../../data/titanic.csv");
+    if(!inputFile.open(QFile::ReadOnly | QFile::Text))
+    {
+        std::cerr << "Cannot open file\n";
+    }
+    // QFileDialog
+    QTextStream inputStream(&inputFile);
+    
+    QString firstline = inputStream.readLine();
+    titanicModel->setHorizontalHeaderLabels(firstline.split(","));
+    
+    while(!inputStream.atEnd())
+    {
+        QString line = inputStream.readLine();
+        
+        QList<QStandardItem*> row;
+        for (QString& word : line.split(","))
+        {
+            row.append(new QStandardItem(word));
+        }
+        titanicModel->appendRow(row);
+    }
+    ui->listView->setModelColumn(3);
 }
 
 MainWindow::~MainWindow()

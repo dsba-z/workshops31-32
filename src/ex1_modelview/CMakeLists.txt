@@ -4,5 +4,7 @@ add_executable(ModelView
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    examplemodel.cpp
+    examplemodel.h
 )
 target_link_libraries(ModelView Qt5::Widgets)

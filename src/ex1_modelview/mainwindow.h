@@ -2,7 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QStandardItemModel>
+
+#include "examplemodel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,9 +17,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void onLoadButtonPushed();
+    void setListViewColumn(int value);
+
 private:
     Ui::MainWindow *ui;
-    QStandardItemModel *titanicModel;
+    ExampleModel *titanicModel;
 };
 
 #endif // MAINWINDOW_H

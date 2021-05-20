@@ -31,6 +31,29 @@ void fillModelWithData(ExampleModel* titanicModel, QString path)
     inputFile.close();
 }
 
+void saveModelAsFile(ExampleModel* m, QString path)
+{
+    QFile outFile(path);
+    outFile.open(QFile::WriteOnly | QFile::Text);
+    QTextStream out(&outFile);
+    
+    for (int i = 0; i < m->rowCount(); ++i)
+    {
+        for (int j = 0; j < m->columnCount(); ++j)
+        {
+            QModelIndex idx = m->index(i, j);
+            out << m->data(idx).toString();
+            if (j != m->columnCount() - 1)
+            {
+                out << ",";
+            }
+        }
+        out << "\n";
+    }
+    outFile.close();
+}
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -55,7 +78,6 @@ void MainWindow::onLoadButtonPushed()
 {
     QString path = QFileDialog::getOpenFileName(this);
     fillModelWithData(titanicModel, path);
-    update();
 }
 
 void MainWindow::setListViewColumn(int value)

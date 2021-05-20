@@ -42,6 +42,20 @@ QVariant ExampleModel::data(const QModelIndex &index, int role) const
 
 void ExampleModel::appendRow(QList<QString> newRow)
 {
+    bool columnFlag = false;
+    if (exampleData.isEmpty())
+    {
+        columnFlag = true;
+        beginInsertColumns(QModelIndex(), 0, newRow.size());
+    }
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
     exampleData.append(newRow);
+    endInsertRows();
+    
+    if (columnFlag)
+    {
+        endInsertColumns();
+    }
+    
 }
 

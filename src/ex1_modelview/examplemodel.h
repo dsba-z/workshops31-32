@@ -19,6 +19,9 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     void appendRow(QList<QString> newRow);
 
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    
 private:
     QList<QList<QString> > exampleData;
 };

@@ -25,12 +25,15 @@ int ExampleModel::columnCount(const QModelIndex &parent) const
     return exampleData[0].size();
 }
 
+
+
+
 QVariant ExampleModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
     
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
         int row = index.row();
         int column = index.column();
@@ -39,6 +42,26 @@ QVariant ExampleModel::data(const QModelIndex &index, int role) const
     }
     return QVariant();
 }
+
+
+
+bool ExampleModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (data(index, role) != value) {
+        
+        exampleData[index.row()][index.column()] = value.toString();
+        
+        emit dataChanged(index, index, QVector<int>() << role);
+        return true;
+    }
+    return false;
+}
+
+Qt::ItemFlags ExampleModel::flags(const QModelIndex &index) const
+{
+    return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+}
+
 
 void ExampleModel::appendRow(QList<QString> newRow)
 {

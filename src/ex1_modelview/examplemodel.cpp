@@ -1,4 +1,5 @@
 #include "examplemodel.h"
+#include <QBrush>
 
 ExampleModel::ExampleModel(QObject *parent)
     : QAbstractTableModel(parent)
@@ -27,18 +28,20 @@ int ExampleModel::columnCount(const QModelIndex &parent) const
 
 
 
-
 QVariant ExampleModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
-    
+    int row = index.row();
+    int column = index.column();
     if (role == Qt::DisplayRole || role == Qt::EditRole)
     {
-        int row = index.row();
-        int column = index.column();
-        
         return exampleData.at(row).at(column);
+    }
+    else if (role == Qt::BackgroundRole)
+    {
+        
+        return QBrush(Qt::red);
     }
     return QVariant();
 }
@@ -50,8 +53,6 @@ bool ExampleModel::setData(const QModelIndex &index, const QVariant &value, int 
     if (data(index, role) != value) {
         
         exampleData[index.row()][index.column()] = value.toString();
-        
-        emit dataChanged(index, index, QVector<int>() << role);
         return true;
     }
     return false;
@@ -79,6 +80,13 @@ void ExampleModel::appendRow(QList<QString> newRow)
     {
         endInsertColumns();
     }
-    
+}
+
+
+void ExampleModel::deleteRow(int idx)
+{
+    beginRemoveRows(QModelIndex(), idx, idx);
+    exampleData.removeAt(idx);
+    endRemoveRows();
 }
 

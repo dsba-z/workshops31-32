@@ -22,8 +22,12 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     
+    void deleteRow(int idx);
+    
 private:
     QList<QList<QString> > exampleData;
+signals:
+    void editCompleted(const QString &);
 };
 
 #endif // EXAMPLEMODEL_H

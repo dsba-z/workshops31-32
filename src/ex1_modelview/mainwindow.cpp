@@ -62,10 +62,14 @@ MainWindow::MainWindow(QWidget *parent)
     titanicModel = new ExampleModel(this);
     
 //    fillModelWithData(titanicModel, "../../data/titanic.csv");
-    ui->listView->setModel(titanicModel);
-    ui->tableView->setModel(titanicModel);
 
     ui->listView->setModelColumn(0);
+    
+    tmodel = new QTransposeProxyModel(titanicModel);
+    
+    ui->listView->setModel(tmodel);
+    
+    ui->tableView->setModel(titanicModel);
 }
 
 MainWindow::~MainWindow()
@@ -82,6 +86,7 @@ void MainWindow::onLoadButtonPushed()
 
 void MainWindow::setListViewColumn(int value)
 {
+    titanicModel->deleteRow(value);
     ui->listView->setModelColumn(value);
 }
 

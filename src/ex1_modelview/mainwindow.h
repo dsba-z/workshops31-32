@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTransposeProxyModel>
 
 #include "examplemodel.h"
 
@@ -24,6 +25,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     ExampleModel *titanicModel;
+    QTransposeProxyModel *tmodel;
 };
 
 #endif // MAINWINDOW_H

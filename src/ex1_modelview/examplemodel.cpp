@@ -70,7 +70,7 @@ void ExampleModel::appendRow(QList<QString> newRow)
     if (exampleData.isEmpty())
     {
         columnFlag = true;
-        beginInsertColumns(QModelIndex(), 0, newRow.size());
+        beginInsertColumns(QModelIndex(), 0, newRow.size() - 1);
     }
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     exampleData.append(newRow);

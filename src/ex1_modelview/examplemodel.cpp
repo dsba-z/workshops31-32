@@ -41,7 +41,7 @@ QVariant ExampleModel::data(const QModelIndex &index, int role) const
     else if (role == Qt::BackgroundRole)
     {
         
-        return QBrush(Qt::red);
+        return QBrush(Qt::gray);
     }
     return QVariant();
 }

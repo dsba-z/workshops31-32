@@ -21,6 +21,7 @@ public:
 private slots:
     void onLoadButtonPushed();
     void setListViewColumn(int value);
+    void onDeleteButtonClicked();
 
 private:
     Ui::MainWindow *ui;

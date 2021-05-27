@@ -18,40 +18,10 @@
     <bool>true</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="7" column="1">
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="text">
-       <string>Delete</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QListView" name="listView"/>
-    </item>
-    <item row="4" column="1">
-     <widget class="QSpinBox" name="spinBox"/>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>ListView</string>
-      </property>
-     </widget>
-    </item>
     <item row="5" column="1">
      <widget class="QPushButton" name="pushButton">
       <property name="text">
        <string>Load</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="0">
-     <widget class="QTableView" name="tableView"/>
-    </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>TableView</string>
       </property>
      </widget>
     </item>
@@ -62,11 +32,48 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
-     <widget class="QSpinBox" name="spinBox_2"/>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>ListView</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>TableView</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QSpinBox" name="spinBox"/>
+    </item>
+    <item row="6" column="0">
+     <widget class="QTableView" name="tableView"/>
+    </item>
+    <item row="7" column="1">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="text">
+       <string>Delete</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QListView" name="listView"/>
     </item>
     <item row="7" column="0">
      <widget class="QLineEdit" name="lineEdit"/>
+    </item>
+    <item row="6" column="1">
+     <widget class="QSpinBox" name="spinBox_2">
+      <property name="maximum">
+       <number>99999</number>
+      </property>
+      <property name="value">
+       <number>1</number>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -105,9 +112,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDeleteButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>554</x>
+     <y>379</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>830</x>
+     <y>349</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onLoadButtonPushed()</slot>
   <slot>setListViewColumn(int)</slot>
+  <slot>onDeleteButtonClicked()</slot>
  </slots>
 </ui>

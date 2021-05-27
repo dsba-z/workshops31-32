@@ -65,7 +65,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->listView->setModelColumn(0);
     
-    tmodel = new QTransposeProxyModel(titanicModel);
+    tmodel = new QTransposeProxyModel(this);
+    tmodel->setSourceModel(titanicModel);
     
     ui->listView->setModel(tmodel);
     
@@ -76,6 +77,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete titanicModel;
+    delete tmodel;
 }
 
 void MainWindow::onLoadButtonPushed()
@@ -86,8 +88,13 @@ void MainWindow::onLoadButtonPushed()
 
 void MainWindow::setListViewColumn(int value)
 {
-    titanicModel->deleteRow(value);
     ui->listView->setModelColumn(value);
 }
 
-
+void MainWindow::onDeleteButtonClicked()
+{
+    if (ui->spinBox_2->value() > 0)
+    {
+        titanicModel->deleteRow(ui->spinBox_2->value() - 1);
+    }
+}

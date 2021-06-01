@@ -17,8 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     titanicModel = new ExampleModel(this);
-    
-//    fillModelWithData(titanicModel, "../../data/titanic.csv");
 
     ui->listView->setModelColumn(0);
     
@@ -27,15 +25,19 @@ MainWindow::MainWindow(QWidget *parent)
     
     ui->listView->setModel(tmodel);
     
-    ui->tableView->setModel(titanicModel);
+    sortModel = new QSortFilterProxyModel(this);
+    sortModel->setSourceModel(titanicModel);
+    ui->tableView->setModel(sortModel);
+    ui->tableView->setSortingEnabled(true);
     
     
     connect(ui->tableView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
             SLOT(onTableViewCurrentChanged(QModelIndex,QModelIndex)));
+    
+    
 }
-
 
 void MainWindow::onTableViewCurrentChanged(QModelIndex next, QModelIndex prev)
 {
@@ -49,12 +51,14 @@ MainWindow::~MainWindow()
     delete ui;
     delete titanicModel;
     delete tmodel;
+    delete sortModel;
 }
 
 void MainWindow::onLoadButtonPushed()
 {
     QString path = QFileDialog::getOpenFileName(this);
     titanicModel->fillModelWithData(path);
+    sortModel->setSourceModel(titanicModel);
 }
 
 void MainWindow::setListViewColumn(int value)
@@ -79,5 +83,12 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
 {
     int row = index.row();
     ui->listView->setModelColumn(row);
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    sortModel->setFilterKeyColumn(3);
+    sortModel->setFilterFixedString(ui->lineEdit->text());
 }
 

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTransposeProxyModel>
+#include <QSortFilterProxyModel>
 
 #include "examplemodel.h"
 
@@ -27,10 +28,13 @@ private slots:
     void on_tableView_clicked(const QModelIndex &index);
     void onTableViewCurrentChanged(QModelIndex prev, QModelIndex next);
     
+    void on_pushButton_3_clicked();
+    
 private:
     Ui::MainWindow *ui;
     ExampleModel *titanicModel;
     QTransposeProxyModel *tmodel;
+    QSortFilterProxyModel *sortModel;
 };
 
 #endif // MAINWINDOW_H

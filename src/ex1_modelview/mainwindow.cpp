@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "aboutdialog.h"
 
 #include <QWidget>
 #include <QStandardItemModel>
@@ -71,7 +72,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listView->setModel(tmodel);
     
     ui->tableView->setModel(titanicModel);
+    
+    
+    connect(ui->tableView->selectionModel(),
+            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            this,
+            SLOT(onTableViewCurrentChanged(QModelIndex,QModelIndex)));
 }
+
+
+void MainWindow::onTableViewCurrentChanged(QModelIndex next, QModelIndex prev)
+{
+    int row = next.row();
+    ui->listView->setModelColumn(row);
+}
+
 
 MainWindow::~MainWindow()
 {
@@ -93,8 +108,21 @@ void MainWindow::setListViewColumn(int value)
 
 void MainWindow::onDeleteButtonClicked()
 {
-    if (ui->spinBox_2->value() > 0)
-    {
-        titanicModel->deleteRow(ui->spinBox_2->value() - 1);
-    }
+    QModelIndex idx = ui->tableView->currentIndex();
+    int row = idx.row();
+    titanicModel->deleteRow(row);
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDialog dialog;
+    dialog.exec();
+}
+
+void MainWindow::on_tableView_clicked(const QModelIndex &index)
+{
+//    ui->tableView->setSpan()
+    int row = index.row();
+    ui->listView->setModelColumn(row);
+}
+

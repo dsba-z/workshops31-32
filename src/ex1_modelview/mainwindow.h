@@ -22,7 +22,11 @@ private slots:
     void onLoadButtonPushed();
     void setListViewColumn(int value);
     void onDeleteButtonClicked();
-
+    void on_actionAbout_triggered();
+    
+    void on_tableView_clicked(const QModelIndex &index);
+    void onTableViewCurrentChanged(QModelIndex prev, QModelIndex next);
+    
 private:
     Ui::MainWindow *ui;
     ExampleModel *titanicModel;

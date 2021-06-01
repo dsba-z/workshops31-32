@@ -3,8 +3,6 @@
 #include <QFile>
 #include <QTextStream>
 
-#include <iostream>
-
 ExampleModel::ExampleModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
@@ -100,10 +98,6 @@ int ExampleModel::columnCount(const QModelIndex &parent) const
 
 QVariant ExampleModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (orientation == Qt::Orientation::Horizontal)
-    {
-        std::cerr << section << "\n";
-    }
     if (role == Qt::DisplayRole && !headerList.empty() && section >= 0)
     {
         if (orientation == Qt::Orientation::Horizontal && section < 12)
@@ -161,7 +155,6 @@ void ExampleModel::appendRow(QList<QVariant> newRow)
     if (exampleData.isEmpty())
     {
         columnFlag = true;
-        std::cerr << newRow.size() << "\n";
         beginInsertColumns(QModelIndex(), 0, newRow.size() - 1);
     }
     exampleData.append(newRow);
@@ -174,11 +167,9 @@ void ExampleModel::appendRow(QList<QVariant> newRow)
     endInsertRows();
 }
 
-
 void ExampleModel::deleteRow(int idx)
 {
     beginRemoveRows(QModelIndex(), idx, idx);
     exampleData.removeAt(idx);
     endRemoveRows();
 }
-

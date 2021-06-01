@@ -1,10 +1,56 @@
 #include "examplemodel.h"
 #include <QBrush>
+#include <QFile>
+#include <QTextStream>
 
 ExampleModel::ExampleModel(QObject *parent)
     : QAbstractTableModel(parent)
 {
 }
+
+void ExampleModel::fillModelWithData(QString path)
+{
+    QFile inputFile(path);
+    inputFile.open(QFile::ReadOnly | QFile::Text);
+    QTextStream inputStream(&inputFile);
+
+    QString firstline = inputStream.readLine();
+
+    while(!inputStream.atEnd())
+    {
+        QString line = inputStream.readLine();
+        
+        QList<QString> dataRow;
+        for (QString& item : line.split(",")) {
+            dataRow.append(item);
+        }
+        appendRow(dataRow);
+    }
+    inputFile.close();
+}
+
+void ExampleModel::saveModelAsFile(QString path)
+{
+    QFile outFile(path);
+    outFile.open(QFile::WriteOnly | QFile::Text);
+    QTextStream out(&outFile);
+    
+    for (int i = 0; i < rowCount(); ++i)
+    {
+        for (int j = 0; j < columnCount(); ++j)
+        {
+            QModelIndex idx = index(i, j);
+            out << data(idx).toString();
+            if (j != columnCount() - 1)
+            {
+                out << ",";
+            }
+        }
+        out << "\n";
+    }
+    outFile.close();
+}
+
 
 int ExampleModel::rowCount(const QModelIndex &parent) const
 {

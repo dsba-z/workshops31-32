@@ -12,6 +12,9 @@ class ExampleModel : public QAbstractTableModel
 public:
     explicit ExampleModel(QObject *parent = nullptr);
     
+    void fillModelWithData(QString path);
+    void saveModelAsFile(QString path);
+    
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;

@@ -11,50 +11,6 @@
 
 #include <iostream>
 
-void fillModelWithData(ExampleModel* titanicModel, QString path)
-{
-    QFile inputFile(path);
-    inputFile.open(QFile::ReadOnly | QFile::Text);
-    QTextStream inputStream(&inputFile);
-
-    QString firstline = inputStream.readLine();
-
-    while(!inputStream.atEnd())
-    {
-        QString line = inputStream.readLine();
-        
-        QList<QString> dataRow;
-        for (QString& item : line.split(",")) {
-            dataRow.append(item);
-        }
-        titanicModel->appendRow(dataRow);
-    }
-    inputFile.close();
-}
-
-void saveModelAsFile(ExampleModel* m, QString path)
-{
-    QFile outFile(path);
-    outFile.open(QFile::WriteOnly | QFile::Text);
-    QTextStream out(&outFile);
-    
-    for (int i = 0; i < m->rowCount(); ++i)
-    {
-        for (int j = 0; j < m->columnCount(); ++j)
-        {
-            QModelIndex idx = m->index(i, j);
-            out << m->data(idx).toString();
-            if (j != m->columnCount() - 1)
-            {
-                out << ",";
-            }
-        }
-        out << "\n";
-    }
-    outFile.close();
-}
-
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -98,7 +54,7 @@ MainWindow::~MainWindow()
 void MainWindow::onLoadButtonPushed()
 {
     QString path = QFileDialog::getOpenFileName(this);
-    fillModelWithData(titanicModel, path);
+    titanicModel->fillModelWithData(path);
 }
 
 void MainWindow::setListViewColumn(int value)
@@ -121,7 +77,6 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
 {
-//    ui->tableView->setSpan()
     int row = index.row();
     ui->listView->setModelColumn(row);
 }

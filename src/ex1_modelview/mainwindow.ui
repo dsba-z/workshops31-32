@@ -40,6 +40,9 @@
     </item>
     <item row="7" column="3">
      <widget class="QPushButton" name="pushButton_2">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>Delete</string>
       </property>

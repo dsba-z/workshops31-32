@@ -8,7 +8,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->setupUi(this);
     
     renderArea = new RenderArea(ui->frame);
-    ui->horizontalLayout_2->addWidget(renderArea);
+    ui->gridLayout_2->addWidget(renderArea);
 }
 
 AboutDialog::~AboutDialog()

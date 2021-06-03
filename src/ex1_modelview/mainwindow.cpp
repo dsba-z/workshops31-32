@@ -11,16 +11,17 @@
 
 #include <iostream>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
+    ui(new Ui::MainWindow),
+    titanicModel(new ExampleModel),
+    tmodel(new QTransposeProxyModel)
 {
+    //
+    ui = new Ui::MainWindow;
     ui->setupUi(this);
-    titanicModel = new ExampleModel(this);
-
+    
     ui->listView->setModelColumn(0);
     
-    tmodel = new QTransposeProxyModel(this);
     tmodel->setSourceModel(titanicModel);
     
     ui->listView->setModel(tmodel);
@@ -31,17 +32,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableView->setSortingEnabled(true);
     
     
+    
     connect(ui->tableView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             this,
             SLOT(onTableViewCurrentChanged(QModelIndex,QModelIndex)));
-    
-    
 }
 
 void MainWindow::onTableViewCurrentChanged(QModelIndex next, QModelIndex prev)
 {
-    int row = next.row();
+    int row = sortModel->mapToSource(next).row();
     ui->listView->setModelColumn(row);
 }
 
@@ -57,8 +57,13 @@ MainWindow::~MainWindow()
 void MainWindow::onLoadButtonPushed()
 {
     QString path = QFileDialog::getOpenFileName(this);
+    if (path.isNull())
+    {
+        return;
+    }
+    titanicModel->deleteAll();
     titanicModel->fillModelWithData(path);
-    sortModel->setSourceModel(titanicModel);
+    ui->tableView->sortByColumn(0, Qt::SortOrder::AscendingOrder);
 }
 
 void MainWindow::setListViewColumn(int value)
@@ -81,7 +86,7 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
 {
-    int row = index.row();
+    int row = sortModel->mapToSource(index).row();
     ui->listView->setModelColumn(row);
 }
 
@@ -91,4 +96,3 @@ void MainWindow::on_pushButton_3_clicked()
     sortModel->setFilterKeyColumn(3);
     sortModel->setFilterFixedString(ui->lineEdit->text());
 }
-

@@ -29,6 +29,8 @@ public:
     
     void deleteRow(int idx);
     
+    void deleteAll();
+    
 private:
     QList<QList<QVariant> > exampleData;
     QList<QString> headerList;

@@ -16,11 +16,11 @@ void ExampleModel::fillModelWithData(QString path)
 
     QString firstline = inputStream.readLine();
     headerList = firstline.split(",");
-
+    emit headerDataChanged(Qt::Horizontal, 0, headerList.size());
+    
     while(!inputStream.atEnd())
     {
         QString line = inputStream.readLine();
-        
         QList<QVariant> dataRow;
         for (QString& item : line.split(",")) {
             bool ok = false;
@@ -98,9 +98,9 @@ int ExampleModel::columnCount(const QModelIndex &parent) const
 
 QVariant ExampleModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::DisplayRole && !headerList.empty() && section >= 0)
+    if (role == Qt::DisplayRole && !headerList.empty())
     {
-        if (orientation == Qt::Orientation::Horizontal && section < 12)
+        if (orientation == Qt::Orientation::Horizontal)
         {
             return headerList.at(section);
         }
@@ -130,8 +130,6 @@ QVariant ExampleModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-
-
 bool ExampleModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (data(index, role) != value) {
@@ -156,14 +154,11 @@ void ExampleModel::appendRow(QList<QVariant> newRow)
     {
         columnFlag = true;
         beginInsertColumns(QModelIndex(), 0, newRow.size() - 1);
-    }
-    exampleData.append(newRow);
-
-    
-    if (columnFlag)
-    {
         endInsertColumns();
     }
+    exampleData.append(newRow);
+    
+
     endInsertRows();
 }
 
@@ -172,4 +167,14 @@ void ExampleModel::deleteRow(int idx)
     beginRemoveRows(QModelIndex(), idx, idx);
     exampleData.removeAt(idx);
     endRemoveRows();
+}
+
+void ExampleModel::deleteAll()
+{
+    
+    beginRemoveColumns(QModelIndex(), 0, columnCount() - 1);
+    beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+    exampleData.clear();
+    endRemoveRows();
+    endRemoveColumns();
 }

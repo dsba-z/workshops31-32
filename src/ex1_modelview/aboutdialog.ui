@@ -6,14 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>431</height>
+    <width>575</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>19</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Name of the application</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0">
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
@@ -28,25 +40,16 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>19</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Name of the application</string>
-     </property>
+     <layout class="QGridLayout" name="gridLayout_2"/>
     </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
       <string>Description Description Description Description Description Description Description Description Description Description Description </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
